@@ -88,15 +88,15 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-slate-400 text-sm">
                 <Mail className="h-4 w-4 mt-0.5 text-blue-500 flex-shrink-0" />
-                <span>contacto@antalm.com</span>
+                <span>ventas@antalm.com.mx</span>
               </li>
               <li className="flex items-start gap-2 text-slate-400 text-sm">
                 <Phone className="h-4 w-4 mt-0.5 text-cyan-400 flex-shrink-0" />
-                <span>+52 (81) 8888-9999</span>
+                <span>(427) 274-9160</span>
               </li>
               <li className="flex items-start gap-2 text-slate-400 text-sm">
                 <MapPin className="h-4 w-4 mt-0.5 text-blue-500 flex-shrink-0" />
-                <span>Monterrey, Nuevo León, México</span>
+                <span>Querétaro, Qro., México</span>
               </li>
             </ul>
           </div>

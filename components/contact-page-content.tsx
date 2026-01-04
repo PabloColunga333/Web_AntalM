@@ -10,22 +10,22 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Teléfono",
-    details: ["+52 (55) 1234-5678", "+52 (81) 8765-4321"],
+    details: ["(427) 274-9160"],
   },
   {
     icon: Mail,
     title: "Email",
-    details: ["contacto@antalm.com", "ventas@antalm.com"],
+    details: ["ventas@antalm.com.mx"],
   },
   {
     icon: MapPin,
-    title: "Oficinas",
-    details: ["Ciudad de México", "Monterrey, N.L."],
+    title: "Ubicación",
+    details: ["Querétaro, Qro., México"],
   },
   {
     icon: Clock,
-    title: "Horario",
-    details: ["Lun - Vie: 9:00 - 18:00", "Sáb: 9:00 - 14:00"],
+    title: "Horario de Soporte",
+    details: ["Lun - Vie: 9:00 am - 6:00 pm", "(excepto días festivos)", "Urgencias: 24/7 vía telefónica"],
   },
 ]
 

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,11 +12,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Menu } from "lucide-react"
+import { Menu, MoveRight, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,216 +37,310 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between lg:grid lg:grid-cols-3">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
-            <Image
-              src="/logo-antal-m.png"
-              alt="Antal M - Effective Manufacturing Software"
-              width={120}
-              height={40}
-              className="h-10 w-auto transition-opacity group-hover:opacity-80"
-              priority
-            />
-          </Link>
+          <div className="flex justify-start">
+            <Link href="/" className="flex items-center group">
+              <Image
+                src="/logo-antal-m.png"
+                alt="Antal M - Effective Manufacturing Software"
+                width={140}
+                height={45}
+                className="h-12 w-auto transition-opacity group-hover:opacity-80"
+                priority
+              />
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
-          <NavigationMenu className="hidden lg:flex">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-                    Inicio
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:flex lg:justify-center">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <Link href="/" legacyBehavior passHref>
+                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+                      Inicio
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
 
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-slate-700 hover:text-blue-600">
-                  Nosotros
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[220px] gap-3 p-4 bg-white border border-slate-200 shadow-lg">
-                    <li>
-                      <Link href="/nosotros" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Nuestra Empresa</div>
-                          <p className="text-xs text-slate-500">Historia y valores</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/nosotros#equipo" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Nuestro Equipo</div>
-                          <p className="text-xs text-slate-500">Expertos en Industry 4.0</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/nosotros#partners" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Partners</div>
-                          <p className="text-xs text-slate-500">Siemens y más</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-slate-700 hover:text-blue-600 hover:bg-slate-50 data-[state=open]:text-blue-600 data-[state=open]:bg-slate-50">
+                    Nosotros
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="!w-[500px] p-4 bg-slate-950 border-slate-800">
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Columna izquierda: Descripción y CTA */}
+                      <div className="flex flex-col justify-between p-2">
+                        <div className="space-y-2">
+                          <p className="text-base font-semibold text-white">Nosotros</p>
+                          <p className="text-sm text-slate-300 leading-relaxed">
+                            Conoce nuestra trayectoria como Partner Oficial de Siemens en soluciones Industry 4.0.
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          className="mt-8 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white"
+                        >
+                          Conocer más
+                        </Button>
+                      </div>
 
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-slate-700 hover:text-blue-600">
-                  Servicios
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[260px] gap-3 p-4 bg-white border border-slate-200 shadow-lg">
-                    <li>
-                      <Link href="/servicios" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Todos los Servicios</div>
-                          <p className="text-xs text-slate-500">Soluciones completas</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/servicios#aps" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Sistemas APS</div>
-                          <p className="text-xs text-slate-500">Planificación Avanzada</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/servicios#mes" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Sistemas MES</div>
-                          <p className="text-xs text-slate-500">Ejecución de Manufactura</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/servicios#apqs" legacyBehavior passHref>
-                        <NavigationMenuLink className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 text-slate-700 hover:text-blue-600">
-                          <div className="text-sm font-medium">Sistemas APQS</div>
-                          <p className="text-xs text-slate-500">Control de Calidad</p>
-                        </NavigationMenuLink>
-                      </Link>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+                      {/* Columna derecha: Enlaces */}
+                      <div className="flex flex-col justify-end space-y-1">
+                        <Link
+                          href="/nosotros"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Nuestra Empresa
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                        <Link
+                          href="/nosotros#equipo"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Nuestro Equipo
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                        <Link
+                          href="/nosotros#partners"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Partners Estratégicos
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
-              <NavigationMenuItem>
-                <Link href="/blog" legacyBehavior passHref>
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-                    Blog
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-slate-700 hover:text-blue-600 hover:bg-slate-50 data-[state=open]:text-blue-600 data-[state=open]:bg-slate-50">
+                    Servicios
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="!w-[520px] p-4 bg-slate-950 border-slate-800">
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Columna izquierda: Descripción y CTA */}
+                      <div className="flex flex-col justify-between p-2">
+                        <div className="space-y-2">
+                          <p className="text-base font-semibold text-white">Servicios</p>
+                          <p className="text-sm text-slate-300 leading-relaxed">
+                            Soluciones integrales de software para manufactura inteligente y digitalización industrial.
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          className="mt-8 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white"
+                        >
+                          Solicitar Demo
+                        </Button>
+                      </div>
 
-              <NavigationMenuItem>
-                <Link href="/contacto" legacyBehavior passHref>
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-                    Contacto
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+                      {/* Columna derecha: Enlaces */}
+                      <div className="flex flex-col justify-end space-y-1">
+                        <Link
+                          href="/servicios"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Todos los Servicios
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                        <Link
+                          href="/servicios#aps"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Sistemas APS
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                        <Link
+                          href="/servicios#mes"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Sistemas MES
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                        <Link
+                          href="/servicios#apqs"
+                          className="flex items-center justify-between rounded-md hover:bg-slate-800 py-3 px-4 transition-colors group"
+                        >
+                          <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400">
+                            Sistemas APQS
+                          </span>
+                          <MoveRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                        </Link>
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
-              <NavigationMenuItem>
-                <Link href="/eventos" legacyBehavior passHref>
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-                    Eventos
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+                <NavigationMenuItem>
+                  <Link href="/blog" legacyBehavior passHref>
+                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+                      Blog
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center gap-4">
+                <NavigationMenuItem>
+                  <Link href="/contacto" legacyBehavior passHref>
+                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+                      Contacto
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link href="/eventos" legacyBehavior passHref>
+                    <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+                      Eventos
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
+          {/* CTA Button - Right aligned */}
+          <div className="hidden lg:flex items-center justify-end gap-4">
+            <Button variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-50 bg-transparent">
+              (427) 274-9160
+            </Button>
             <Button className="glow-on-hover bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold">
-              Solicitar Demo
+              Contactar
             </Button>
           </div>
 
-          {/* Mobile Menu */}
-          <Sheet>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon">
+          <div className="flex lg:hidden items-center justify-end">
+            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6 text-slate-700" />
+              ) : (
                 <Menu className="h-6 w-6 text-slate-700" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-white border-slate-200">
-              {/* Logo en menú móvil */}
-              <div className="mb-6">
-                <Image src="/logo-antal-m.png" alt="Antal M" width={100} height={35} className="h-8 w-auto" />
+              )}
+            </Button>
+
+            {isMobileMenuOpen && (
+              <div className="absolute top-20 left-0 right-0 bg-white border-t border-slate-200 shadow-2xl py-6 container mx-auto">
+                <nav className="flex flex-col gap-6">
+                  <Link
+                    href="/"
+                    className="flex items-center justify-between text-slate-700 hover:text-blue-600 text-base font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span>Inicio</span>
+                    <MoveRight className="w-4 h-4 text-slate-400" />
+                  </Link>
+
+                  <div className="space-y-3">
+                    <p className="text-base font-semibold text-slate-900">Nosotros</p>
+                    <Link
+                      href="/nosotros"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Nuestra Empresa</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                    <Link
+                      href="/nosotros#equipo"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Nuestro Equipo</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                    <Link
+                      href="/nosotros#partners"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Partners</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="text-base font-semibold text-slate-900">Servicios</p>
+                    <Link
+                      href="/servicios"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Todos los Servicios</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                    <Link
+                      href="/servicios#aps"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Sistemas APS</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                    <Link
+                      href="/servicios#mes"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Sistemas MES</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                    <Link
+                      href="/servicios#apqs"
+                      className="flex items-center justify-between text-slate-600 hover:text-blue-600 ml-4 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span>Sistemas APQS</span>
+                      <MoveRight className="w-4 h-4 text-slate-400" />
+                    </Link>
+                  </div>
+
+                  <Link
+                    href="/blog"
+                    className="flex items-center justify-between text-slate-700 hover:text-blue-600 text-base font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span>Blog</span>
+                    <MoveRight className="w-4 h-4 text-slate-400" />
+                  </Link>
+
+                  <Link
+                    href="/contacto"
+                    className="flex items-center justify-between text-slate-700 hover:text-blue-600 text-base font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span>Contacto</span>
+                    <MoveRight className="w-4 h-4 text-slate-400" />
+                  </Link>
+
+                  <Link
+                    href="/eventos"
+                    className="flex items-center justify-between text-slate-700 hover:text-blue-600 text-base font-medium transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span>Eventos</span>
+                    <MoveRight className="w-4 h-4 text-slate-400" />
+                  </Link>
+
+                  <Button className="mt-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white w-full">
+                    Solicitar Demo
+                  </Button>
+                </nav>
               </div>
-              <nav className="flex flex-col gap-4 mt-8">
-                <Link href="/" className="text-slate-700 hover:text-blue-600 text-lg font-medium transition-colors">
-                  Inicio
-                </Link>
-                <div className="space-y-2">
-                  <p className="text-slate-500 text-sm font-semibold">Nosotros</p>
-                  <Link href="/nosotros" className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors">
-                    Nuestra Empresa
-                  </Link>
-                  <Link
-                    href="/nosotros#equipo"
-                    className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors"
-                  >
-                    Nuestro Equipo
-                  </Link>
-                  <Link
-                    href="/nosotros#partners"
-                    className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors"
-                  >
-                    Partners
-                  </Link>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-slate-500 text-sm font-semibold">Servicios</p>
-                  <Link href="/servicios" className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors">
-                    Todos los Servicios
-                  </Link>
-                  <Link
-                    href="/servicios#aps"
-                    className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors"
-                  >
-                    Sistemas APS
-                  </Link>
-                  <Link
-                    href="/servicios#mes"
-                    className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors"
-                  >
-                    Sistemas MES
-                  </Link>
-                  <Link
-                    href="/servicios#apqs"
-                    className="block text-slate-700 hover:text-blue-600 ml-4 transition-colors"
-                  >
-                    Sistemas APQS
-                  </Link>
-                </div>
-                <Link href="/blog" className="text-slate-700 hover:text-blue-600 text-lg font-medium transition-colors">
-                  Blog
-                </Link>
-                <Link
-                  href="/contacto"
-                  className="text-slate-700 hover:text-blue-600 text-lg font-medium transition-colors"
-                >
-                  Contacto
-                </Link>
-                <Link
-                  href="/eventos"
-                  className="text-slate-700 hover:text-blue-600 text-lg font-medium transition-colors"
-                >
-                  Eventos
-                </Link>
-                <Button className="mt-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white">Solicitar Demo</Button>
-              </nav>
-            </SheetContent>
-          </Sheet>
+            )}
+          </div>
         </div>
       </div>
     </header>

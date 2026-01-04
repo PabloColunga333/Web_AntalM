@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Calendar, Clock, ArrowRight, TrendingUp, Zap, Target } from "lucide-react"
 import { Button } from "./ui/button"
+import Image from "next/image"
 
 const featuredPost = {
   title: "5 Claves para una Implementación Exitosa de MES en 2025",
@@ -11,7 +12,7 @@ const featuredPost = {
   category: "MES",
   date: "15 Enero 2025",
   readTime: "8 min lectura",
-  image: "/modern-manufacturing-floor-with-digital-screens.jpg",
+  image: "/blog-industry-4-0-factory.png",
 }
 
 const posts = [
@@ -24,6 +25,7 @@ const posts = [
     date: "10 Enero 2025",
     readTime: "6 min",
     color: "from-blue-600 to-blue-400",
+    image: "/blog-aps-software-screen.png",
   },
   {
     icon: Zap,
@@ -34,6 +36,7 @@ const posts = [
     date: "5 Enero 2025",
     readTime: "10 min",
     color: "from-cyan-600 to-cyan-400",
+    image: "/blog-team-planning-meeting.png",
   },
   {
     icon: Target,
@@ -129,8 +132,14 @@ export function BlogContent() {
             className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-2xl overflow-hidden"
           >
             <div className="grid md:grid-cols-2 gap-0">
-              <div className="aspect-video md:aspect-auto bg-slate-800 flex items-center justify-center">
-                <div className="text-slate-600 text-sm">Featured Image</div>
+              <div className="aspect-video md:aspect-auto bg-slate-800 relative overflow-hidden">
+                <Image
+                  src={featuredPost.image || "/placeholder.svg"}
+                  alt={featuredPost.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <div className="inline-flex items-center gap-2 text-sm text-blue-400 font-semibold mb-4">
@@ -183,6 +192,16 @@ export function BlogContent() {
                 className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all group cursor-pointer"
               >
                 <div className={`h-2 bg-gradient-to-r ${post.color}`} />
+                {post.image && (
+                  <div className="relative h-48 bg-slate-800 overflow-hidden">
+                    <Image
+                      src={post.image || "/placeholder.svg"}
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
                 <div className="p-6">
                   <div
                     className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${post.color} mb-4`}
